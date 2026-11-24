@@ -26,6 +26,14 @@ import { join } from "node:path";
 // The winning line: 47 bytes, well inside the 1-200 character gate.
 const LINE = "It was a single sock. I was doing you a favour.";
 
+// The contest gate rejects an entry whose text is not 1-200 characters,
+// so refuse to write anything outside it instead of submitting a
+// text the judge would never see.
+if (LINE.length < 1 || LINE.length > 200) {
+  console.error(`error: line is ${LINE.length} chars, outside the 1-200 gate`);
+  process.exit(1);
+}
+
 function main(): void {
   const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
   const outputPath = join(outputDir, "entry.txt");
